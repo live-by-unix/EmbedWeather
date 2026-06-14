@@ -5,65 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EmbedWeather — Demo</title>
 
+  <!-- Prism.js for perfect code highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+
   <style>
     body {
       margin: 0;
       font-family: system-ui, sans-serif;
-      background: #f5f5f5;
-      color: #111;
-      padding: 40px;
-      line-height: 1.6;
+      background: var(--bg);
+      color: var(--fg);
+      padding: 60px 20px;
+      line-height: 1.7;
+      transition: background .3s, color .3s;
+    }
+
+    :root {
+      --bg: #f5f5f5;
+      --fg: #111;
+      --card-bg: #fff;
+      --shadow: rgba(0,0,0,0.08);
     }
 
     @media (prefers-color-scheme: dark) {
-      body {
-        background: #0f0f0f;
-        color: #fff;
+      :root {
+        --bg: #0f0f0f;
+        --fg: #fff;
+        --card-bg: #111;
+        --shadow: rgba(255,255,255,0.05);
       }
     }
 
     h1 {
       margin-top: 0;
-      font-size: 42px;
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      font-size: 28px;
       font-weight: 700;
     }
 
-    .section {
-      margin: 40px 0;
-    }
-
     .preview-box {
-      padding: 20px;
-      border-radius: 12px;
-      background: #fff;
+      padding: 24px;
+      border-radius: 14px;
+      background: var(--card-bg);
       display: inline-block;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .preview-box {
-        background: #111;
-        box-shadow: 0 4px 20px rgba(255,255,255,0.05);
-      }
-    }
-
-    code {
-      background: #eee;
-      padding: 4px 6px;
-      border-radius: 6px;
-      font-size: 14px;
+      box-shadow: 0 4px 20px var(--shadow);
+      margin-top: 20px;
     }
 
     pre {
-      background: #111;
-      color: #fff;
-      padding: 16px;
       border-radius: 12px;
       overflow-x: auto;
-      font-size: 14px;
+      margin-top: 16px;
     }
 
     /* GitHub Corner */
+    .github-corner svg {
+      fill: #151513;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      border: 0;
+      width: 80px;
+      height: 80px;
+    }
     .github-corner:hover .octo-arm {
       animation: octocat-wave 560ms ease-in-out;
     }
@@ -72,14 +85,6 @@
       20%,60% { transform: rotate(-25deg); }
       40%,80% { transform: rotate(10deg); }
     }
-    @media (max-width:500px) {
-      .github-corner:hover .octo-arm {
-        animation: none;
-      }
-      .github-corner .octo-arm {
-        animation: octocat-wave 560ms ease-in-out;
-      }
-    }
   </style>
 </head>
 
@@ -87,8 +92,7 @@
 
   <!-- GitHub Corner -->
   <a href="https://github.com/live-by-unix/EmbedWeather" class="github-corner" aria-label="View source on GitHub">
-    <svg width="80" height="80" viewBox="0 0 250 250"
-      style="position: absolute; top: 0; right: 0; border: 0; fill: #151513; color: #fff;">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
       <path d="M0 0l115 115h15l12 27 108 108V0z"></path>
       <path class="octo-arm"
         d="M128 109c-15-9-9-19-9-19 3-7 1-11 1-11-2-6 3-2 3-2 4 5 2 11 2 11-3 10 5 15 9 17"
@@ -102,36 +106,28 @@
   <h1>EmbedWeather</h1>
   <p>A tiny, embeddable weather widget with auto‑location, dark/light mode, and zero configuration.</p>
 
-  <div class="section">
-    <h2>Live Demo</h2>
-    <div class="preview-box">
-      <script src="https://embedweather.pages.dev/embedweather.js"></script>
-    </div>
+  <h2>Live Demo</h2>
+  <div class="preview-box">
+    <script src="https://embedweather.pages.dev/embedweather.js"></script>
   </div>
 
-  <div class="section">
-    <h2>Embed via Script Tag</h2>
-    <pre><code>&lt;script src="https://embedweather.pages.dev/embedweather.js"&gt;&lt;/script&gt;</code></pre>
-  </div>
+  <h2>Embed via Script Tag</h2>
+  <pre><code class="language-markup">&lt;script src="https://embedweather.pages.dev/embedweather.js"&gt;&lt;/script&gt;</code></pre>
 
-  <div class="section">
-    <h2>Embed via Iframe</h2>
-    <pre><code>&lt;iframe
+  <h2>Embed via Iframe</h2>
+  <pre><code class="language-markup">&lt;iframe
   src="https://embedweather.pages.dev"
   style="width:260px;height:140px;border:0;border-radius:12px;"
 &gt;&lt;/iframe&gt;</code></pre>
-  </div>
 
-  <div class="section">
-    <h2>How It Works</h2>
-    <ul>
-      <li>Auto‑detects city using <code>ipapi.co</code></li>
-      <li>Fetches weather from <code>Open‑Meteo</code></li>
-      <li>Auto dark/light mode</li>
-      <li>Zero configuration</li>
-      <li>Shadow DOM isolation</li>
-    </ul>
-  </div>
+  <h2>How It Works</h2>
+  <ul>
+    <li>Auto‑detects city using <code>ipapi.co</code></li>
+    <li>Fetches weather from <code>Open‑Meteo</code></li>
+    <li>Auto dark/light mode</li>
+    <li>Shadow DOM isolation</li>
+    <li>Zero configuration. Measures in Celsius.</li>
+  </ul>
 
 </body>
 </html>
